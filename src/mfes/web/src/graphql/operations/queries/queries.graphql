@@ -1,0 +1,10 @@
+query Hello {
+  hello
+}
+
+query GetUser {
+  user {
+    id
+    name
+  }
+}
