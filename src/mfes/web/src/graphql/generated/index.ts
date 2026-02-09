@@ -79,7 +79,43 @@ export type HelloQuery = { __typename?: 'Query', hello: string };
 export type GetUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetUserQuery = { __typename?: 'Query', user: { __typename?: 'User', id: number, name: string } };
+export type GetUserQuery = { __typename?: 'Query', user: { __typename?: 'User', id: number, name: string, email: string, age: number, isActive: boolean } };
+
+export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: number, name: string, email: string, age: number, isActive: boolean }> };
+
+export type GetUserByIdQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type GetUserByIdQuery = { __typename?: 'Query', userById?: { __typename?: 'User', id: number, name: string, email: string, age: number, isActive: boolean } | null };
+
+export type GetProductsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: number, name: string, price: any, inStock: boolean, category: string }> };
+
+export type GetProductByIdQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type GetProductByIdQuery = { __typename?: 'Query', productById?: { __typename?: 'Product', id: number, name: string, price: any, inStock: boolean, category: string } | null };
+
+export type SearchProductsQueryVariables = Exact<{
+  searchTerm: Scalars['String']['input'];
+}>;
+
+
+export type SearchProductsQuery = { __typename?: 'Query', searchProducts: Array<{ __typename?: 'Product', id: number, name: string, price: any, inStock: boolean, category: string }> };
+
+export type GetStatsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetStatsQuery = { __typename?: 'Query', stats: { __typename?: 'Stats', totalUsers: number, activeUsers: number, totalProducts: number, productsInStock: number } };
 
 
 export const HelloDocument = gql`
@@ -92,6 +128,74 @@ export const GetUserDocument = gql`
   user {
     id
     name
+    email
+    age
+    isActive
+  }
+}
+    `;
+export const GetUsersDocument = gql`
+    query GetUsers {
+  users {
+    id
+    name
+    email
+    age
+    isActive
+  }
+}
+    `;
+export const GetUserByIdDocument = gql`
+    query GetUserById($id: Int!) {
+  userById(id: $id) {
+    id
+    name
+    email
+    age
+    isActive
+  }
+}
+    `;
+export const GetProductsDocument = gql`
+    query GetProducts {
+  products {
+    id
+    name
+    price
+    inStock
+    category
+  }
+}
+    `;
+export const GetProductByIdDocument = gql`
+    query GetProductById($id: Int!) {
+  productById(id: $id) {
+    id
+    name
+    price
+    inStock
+    category
+  }
+}
+    `;
+export const SearchProductsDocument = gql`
+    query SearchProducts($searchTerm: String!) {
+  searchProducts(searchTerm: $searchTerm) {
+    id
+    name
+    price
+    inStock
+    category
+  }
+}
+    `;
+export const GetStatsDocument = gql`
+    query GetStats {
+  stats {
+    totalUsers
+    activeUsers
+    totalProducts
+    productsInStock
   }
 }
     `;
@@ -108,6 +212,24 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetUser(variables?: GetUserQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetUserQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetUserQuery>({ document: GetUserDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetUser', 'query', variables);
+    },
+    GetUsers(variables?: GetUsersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetUsersQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetUsersQuery>({ document: GetUsersDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetUsers', 'query', variables);
+    },
+    GetUserById(variables: GetUserByIdQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetUserByIdQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetUserByIdQuery>({ document: GetUserByIdDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetUserById', 'query', variables);
+    },
+    GetProducts(variables?: GetProductsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetProductsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetProductsQuery>({ document: GetProductsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetProducts', 'query', variables);
+    },
+    GetProductById(variables: GetProductByIdQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetProductByIdQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetProductByIdQuery>({ document: GetProductByIdDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetProductById', 'query', variables);
+    },
+    SearchProducts(variables: SearchProductsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<SearchProductsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<SearchProductsQuery>({ document: SearchProductsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'SearchProducts', 'query', variables);
+    },
+    GetStats(variables?: GetStatsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetStatsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetStatsQuery>({ document: GetStatsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetStats', 'query', variables);
     }
   };
 }
