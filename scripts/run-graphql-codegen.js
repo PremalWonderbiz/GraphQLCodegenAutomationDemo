@@ -7,7 +7,7 @@ import { execSync } from "child_process";
  * CONFIG
  * =============================================
  */
-const FRONTEND_ROOT = "Frontend";
+const FRONTEND_ROOT = "src/mfes";
 const LOG_FILE = "graphql-codegen.log";
 
 /**
@@ -72,7 +72,7 @@ writeLog("GraphQL codegen completed successfully");
 function initLog() {
   fs.appendFileSync(
     LOG_FILE,
-    `\n------------------------------------------- LOGS : [${new Date().toISOString()}] -----------------------------------------------------\n`
+    `\n------------------------------------------- LOGS : [${new Date().toISOString()}] -----------------------------------------------------\n`,
   );
 }
 
